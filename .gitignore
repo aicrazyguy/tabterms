@@ -7,8 +7,8 @@ config.json
 public/app.js
 public/app.css
 public/*.map
-phosphor.log
-phosphor.err.log
+tabterms.log
+tabterms.err.log
 DS_Store
 # Logs
 logs

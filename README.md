@@ -1,10 +1,10 @@
-# PHOSPHOR — 80×24 SSH terminal
+# TABTERMS — 80×24 SSH terminal
 
 A green-on-black character terminal in the browser. Exactly **80 columns × 24 rows**, CRT scanlines, WebGL-accelerated rendering (xterm.js), and a server-side SSH client (ssh2) so it can reach **any host on your local network**.
 
 ```
    ┌──────────────────────────────────────────────────────────┐
-   │  PHOSPHOR / 80×24                              scan lan  │
+   │  TABTERMS / 80×24                              scan lan  │
    ├──────────────────────────────────────────────────────────┤
    │                                                          │
    │   demo@fileserver:~$ uptime                              │
@@ -87,8 +87,8 @@ Environment variables take precedence over `config.json`:
 
 | env | meaning |
 | --- | --- |
-| `PHOSPHOR_TABS` | inline JSON array of tabs (same schema as `config.json`) |
-| `PHOSPHOR_CONFIG` | path to another JSON file, or inline JSON |
+| `TABTERMS_TABS` | inline JSON array of tabs (same schema as `config.json`) |
+| `TABTERMS_CONFIG` | path to another JSON file, or inline JSON |
 | `SSH_HOST` | define a single tab from env; also accepts `SSH_PORT`, `SSH_USER`, `SSH_NAME`, `SSH_AUTH_TYPE`, `SSH_PASSWORD`, `SSH_PRIVATE_KEY`, `SSH_PRIVATE_KEY_PATH`, `SSH_PASSPHRASE` |
 
 `SSH_HOST` without a password or key defaults to `agent` authentication.
@@ -98,14 +98,14 @@ Environment variables take precedence over `config.json`:
 Installed as a per-user LaunchAgent so it starts at login and restarts if it crashes:
 
 ```bash
-launchctl print gui/$(id -u)/com.phosphor.term    # status
-launchctl kickstart -k gui/$(id -u)/com.phosphor.term  # restart
-launchctl bootout gui/$(id -u)/com.phosphor.term  # stop + uninstall
+launchctl print gui/$(id -u)/com.tabterms.term    # status
+launchctl kickstart -k gui/$(id -u)/com.tabterms.term  # restart
+launchctl bootout gui/$(id -u)/com.tabterms.term  # stop + uninstall
 ```
 
-- App: `/Users/sam/phosphor` (symlinked from `/Users/sam/Documents/term`)
-- LaunchAgent: `~/Library/LaunchAgents/com.phosphor.term.plist`
-- Logs: `phosphor.log`, `phosphor.err.log`
+- App: `/Users/sam/tabterms` (symlinked from `/Users/sam/Documents/term`)
+- LaunchAgent: `~/Library/LaunchAgents/com.tabterms.term.plist`
+- Logs: `tabterms.log`, `tabterms.err.log`
 - Access token: `.access-token` (persisted so the URL stays stable)
 
 The app lives in the home directory rather than `~/Documents` because macOS privacy
@@ -172,7 +172,7 @@ Where to make a change:
 | New config field | `server/config.js` (normalize + public projection), `client/tabs.js` if shown in UI |
 | New discovery field | `server/discovery.js`, `client/discovery.js` |
 | New DOM id or class | `public/index.html`, `client/dom.js`, `public/style.css`, and the browser tests |
-| New user-facing journey | `.opencode/skills/verify-phosphor/features/` |
+| New user-facing journey | `.opencode/skills/verify-tabterms/features/` |
 
 `public/` — HTML, CSS, bundled client (`app.js` / `app.css`)
 `config.example.json` — tab configuration template (copy to `config.json`)

@@ -301,7 +301,7 @@ body {
 }
 
 .terminal .xterm {
-  /* keep the phosphor look on native scrollbars */
+  /* keep the terminal look on native scrollbars */
   scrollbar-color: var(--green-dim) transparent;
 }
 

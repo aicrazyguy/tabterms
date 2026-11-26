@@ -1,6 +1,6 @@
 import { els } from './dom.js';
 
-const PREFS_KEY = 'phosphor.prefs.v2';
+const PREFS_KEY = 'tabterms.prefs.v2';
 
 export function createPrefs(ctx) {
   function save(cfg) {

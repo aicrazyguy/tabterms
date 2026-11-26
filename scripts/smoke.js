@@ -66,7 +66,7 @@ function log(...args) {
   const geometry = await page.evaluate(() => {
     const screen = document.querySelector('.xterm-screen').getBoundingClientRect();
     const stage = document.getElementById('stage').getBoundingClientRect();
-    const term = window.__phosphor.term;
+    const term = window.__tabterms.term;
     return {
       cols: term.cols,
       rows: term.rows,
@@ -91,11 +91,11 @@ function log(...args) {
   await shoot('02-filled.png');
 
   await page.click('#connect-btn');
-  await page.waitForFunction(() => window.__phosphor.phase === 'ready', { timeout: 15000 });
+  await page.waitForFunction(() => window.__tabterms.phase === 'ready', { timeout: 15000 });
   await new Promise((r) => setTimeout(r, 800));
 
   const session = await page.evaluate(() => {
-    const b = window.__phosphor.term.buffer.active;
+    const b = window.__tabterms.term.buffer.active;
     const lines = [];
     for (let i = 0; i < b.length; i += 1) {
       const line = b.getLine(i);
@@ -107,7 +107,7 @@ function log(...args) {
       status: document.getElementById('status-text').textContent,
       host: document.getElementById('status-host').textContent,
       fp: document.getElementById('status-fp').textContent,
-      fontSize: window.__phosphor.term.options.fontSize,
+      fontSize: window.__tabterms.term.options.fontSize,
     };
   });
   log('session:', {
@@ -122,7 +122,7 @@ function log(...args) {
   await page.type('.xterm-helper-textarea', 'uname\r');
   await new Promise((r) => setTimeout(r, 700));
   const afterCmd = await page.evaluate(() => {
-    const b = window.__phosphor.term.buffer.active;
+    const b = window.__tabterms.term.buffer.active;
     let text = '';
     for (let i = 0; i < b.length; i += 1) {
       const line = b.getLine(i);
@@ -140,8 +140,8 @@ function log(...args) {
       w: Math.round(screen.width),
       h: Math.round(screen.height),
       fits: screen.width <= stage.width && screen.height <= stage.height,
-      cols: window.__phosphor.term.cols,
-      rows: window.__phosphor.term.rows,
+      cols: window.__tabterms.term.cols,
+      rows: window.__tabterms.term.rows,
     };
   });
   log('session geometry:', afterSessionGeom);
@@ -201,7 +201,7 @@ function log(...args) {
   log(
     'post-connect state:',
     await page.evaluate(() => ({
-      phase: window.__phosphor.phase,
+      phase: window.__tabterms.phase,
       noticeHidden: document.getElementById('form-error').hidden,
       notice: document.getElementById('form-error').textContent,
       btn: document.getElementById('connect-label').textContent,
@@ -211,7 +211,7 @@ function log(...args) {
       user: document.getElementById('user').value,
     }))
   );
-  await page.waitForFunction(() => window.__phosphor.phase === 'ready', { timeout: 15000 });
+  await page.waitForFunction(() => window.__tabterms.phase === 'ready', { timeout: 15000 });
   await page.click('#scan-btn');
   await new Promise((r) => setTimeout(r, 500));
   const closeVisible = await page.evaluate(() => !document.getElementById('panel-close').hidden);
@@ -219,7 +219,7 @@ function log(...args) {
   await new Promise((r) => setTimeout(r, 250));
   const resumed = await page.evaluate(() => ({
     overlayHidden: document.getElementById('overlay').hidden,
-    phase: window.__phosphor.phase,
+    phase: window.__tabterms.phase,
   }));
   log('panel close while live:', { closeVisible, ...resumed });
   await shoot('06-resumed.png');

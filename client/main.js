@@ -71,7 +71,7 @@ els.statusClock.textContent = new Date().toLocaleTimeString([], { hour12: false 
 window.addEventListener('beforeunload', () => ctx.tabs.closeAll());
 
 // Debug/automation hook (harmless in production, handy for tests).
-window.__phosphor = {
+window.__tabterms = {
   get term() {
     return ctx.tabs.activeTab && ctx.tabs.activeTab.term;
   },

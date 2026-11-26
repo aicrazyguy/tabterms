@@ -117,16 +117,16 @@ function createConfig({ rootDir, env }) {
   }
 
   function loadConfigTabs() {
-    if (env.PHOSPHOR_TABS) {
-      return parseTabJson(env.PHOSPHOR_TABS, 'env:PHOSPHOR_TABS');
+    if (env.TABTERMS_TABS) {
+      return parseTabJson(env.TABTERMS_TABS, 'env:TABTERMS_TABS');
     }
 
     const single = tabFromEnv();
     if (single) return normalizeTabs([single], 'env:SSH_*');
 
-    const spec = String(env.PHOSPHOR_CONFIG || '').trim();
+    const spec = String(env.TABTERMS_CONFIG || '').trim();
     if (spec.startsWith('{') || spec.startsWith('[')) {
-      return parseTabJson(spec, 'env:PHOSPHOR_CONFIG');
+      return parseTabJson(spec, 'env:TABTERMS_CONFIG');
     }
 
     const file = spec ? expandHome(spec) : path.join(rootDir, 'config.json');

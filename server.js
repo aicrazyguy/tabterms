@@ -2,7 +2,7 @@
 'use strict';
 
 /**
- * PHOSPHOR // 80x24 SSH terminal gateway
+ * TABTERMS // 80x24 SSH terminal gateway
  *
  * - Serves the static terminal UI
  * - Bridges WebSocket <-> SSH (ssh2) from the server host to any reachable host
@@ -72,7 +72,7 @@ server.listen(PORT, BIND, () => {
 
   console.log('');
   console.log(`  \x1b[32m${line}\x1b[0m`);
-  console.log('  \x1b[1;32mPHOSPHOR\x1b[0m  \x1b[2m80x24 SSH TERMINAL GATEWAY\x1b[0m');
+  console.log('  \x1b[1;32mTABTERMS\x1b[0m  \x1b[2m80x24 SSH TERMINAL GATEWAY\x1b[0m');
   console.log(`  \x1b[32m${line}\x1b[0m`);
   console.log('');
   for (const url of urls.length ? urls : [`${scheme}://localhost:${PORT}${suffix}`]) {
