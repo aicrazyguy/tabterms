@@ -1,0 +1,30 @@
+{
+  "name": "phosphor-term",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Green-on-black 80x24 browser terminal that SSHes anywhere on your LAN",
+  "main": "server.js",
+  "scripts": {
+    "build": "esbuild client/main.js --bundle --minify --sourcemap --format=iife --target=es2020 --outfile=public/app.js",
+    "build:dev": "esbuild client/main.js --bundle --format=iife --target=es2020 --outfile=public/app.js",
+    "start": "node server.js",
+    "dev": "npm run build:dev && node server.js"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@xterm/addon-webgl": "^0.18.0",
+    "@xterm/xterm": "^5.5.0",
+    "esbuild": "^0.21.5",
+    "express": "^4.22.3",
+    "qrcode-terminal": "^0.12.0",
+    "ssh2": "^1.17.0",
+    "ws": "^8.23.0"
+  },
+  "devDependencies": {
+    "pngjs": "^7.0.0",
+    "puppeteer-core": "^22.15.0"
+  }
+}

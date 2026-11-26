@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#020604" />
+    <meta name="color-scheme" content="dark" />
+    <title>PHOSPHOR // 80×24 SSH TERMINAL</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23020604'/%3E%3Ctext x='6' y='23' font-family='monospace' font-size='18' fill='%233dff86'%3E%26gt;_%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="/app.css" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="crt">
+      <div class="bezel">
+        <header class="topbar">
+          <div class="brand">
+            <span class="led" id="led"></span>
+            <span class="brand-name">PHOSPHOR</span>
+            <span class="brand-dim">/ 80×24</span>
+          </div>
+          <div class="tabs" id="tabs" role="tablist" aria-label="ssh sessions"></div>
+          <div class="top-actions">
+            <button type="button" class="btn tiny ghost" id="new-session" title="open a new session tab">+ tab</button>
+            <button type="button" class="btn tiny ghost" id="scan-btn">scan lan</button>
+          </div>
+        </header>
+
+        <main class="stage" id="stage">
+          <div class="screen" id="screen">
+            <div class="terminals" id="terminals"></div>
+            <div class="scanlines" aria-hidden="true"></div>
+            <div class="vignette" aria-hidden="true"></div>
+          </div>
+
+          <div class="overlay" id="overlay" hidden>
+              <form class="panel" id="connect-form" autocomplete="off" novalidate>
+                <div class="panel-head">
+                  <span class="panel-title" id="panel-title">ssh gateway</span>
+                  <span class="panel-head-right">
+                    <span class="panel-meta">80 × 24</span>
+                    <button type="button" class="icon-btn" id="panel-close" hidden aria-label="back to session">✕</button>
+                  </span>
+                </div>
+
+                <div class="panel-body">
+                  <p class="blurb">
+                    Dial any SSH host reachable from this gateway. Credentials cross the encrypted
+                    WebSocket to the server and are handed straight to the SSH client — never stored.
+                  </p>
+
+                  <div class="notice" id="form-error" hidden></div>
+
+                  <div class="grid">
+                    <div class="field span-2">
+                      <label for="host">host</label>
+                      <input id="host" name="host" type="text" spellcheck="false" autocapitalize="off"
+                             autocorrect="off" placeholder="192.168.1.1 or server.lan" required />
+                    </div>
+
+                    <div class="field short">
+                      <label for="port">port</label>
+                      <input id="port" name="port" type="number" min="1" max="65535" value="22" inputmode="numeric" />
+                    </div>
+
+                    <div class="field">
+                      <label for="user">username</label>
+                      <input id="user" name="user" type="text" spellcheck="false" autocapitalize="off"
+                             autocorrect="off" placeholder="root" required />
+                    </div>
+
+                    <div class="field span-2">
+                      <label for="auth">authentication</label>
+                      <select id="auth" name="auth">
+                        <option value="password">password / keyboard-interactive</option>
+                        <option value="key">private key</option>
+                        <option value="agent">ssh-agent on gateway</option>
+                      </select>
+                    </div>
+
+                    <div class="field span-2" id="password-field">
+                      <label for="password">password</label>
+                      <input id="password" name="password" type="password" placeholder="••••••••" />
+                    </div>
+
+                    <div class="field span-2" id="key-field" hidden>
+                      <label for="private-key">private key <span class="label-note">openssh or pem</span></label>
+                      <textarea id="private-key" name="privateKey" spellcheck="false" rows="4"
+                                placeholder="-----BEGIN OPENSSH PRIVATE KEY-----"></textarea>
+                    </div>
+
+                    <div class="field span-2" id="passphrase-field" hidden>
+                      <label for="passphrase">key passphrase <span class="label-note">optional</span></label>
+                      <input id="passphrase" name="passphrase" type="password" placeholder="••••••••" />
+                    </div>
+                  </div>
+
+                  <div class="actions">
+                    <button type="submit" class="btn primary" id="connect-btn">
+                      <span id="connect-label">connect</span>
+                      <span class="arrow">→</span>
+                    </button>
+                    <button type="button" class="btn ghost" id="discover-btn">discover hosts</button>
+                    <label class="check">
+                      <input type="checkbox" id="remember" checked />
+                      <span>remember address</span>
+                    </label>
+                  </div>
+
+                  <div class="discover" id="discover" hidden>
+                    <div class="discover-head">
+                      <span id="discover-title">scanning local network…</span>
+                      <button type="button" class="icon-btn" id="discover-close" aria-label="close">✕</button>
+                    </div>
+                    <div class="discover-list" id="discover-list"></div>
+                  </div>
+
+                  <p class="footnote">
+                    <span class="kbd">tab</span> completes in the terminal ·
+                    <span class="kbd">ctrl</span>+<span class="kbd">c</span> interrupts ·
+                    each session tab stays alive until closed
+                  </p>
+                </div>
+              </form>
+            </div>
+        </main>
+
+        <footer class="statusbar">
+          <span class="dot" id="status-dot"></span>
+          <span class="status-text" id="status-text">disconnected</span>
+          <span class="spacer"></span>
+          <span class="status-cell" id="status-host">no session</span>
+          <span class="status-cell fp" id="status-fp" hidden></span>
+          <span class="status-cell clock" id="status-clock">--:--:--</span>
+        </footer>
+      </div>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

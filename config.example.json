@@ -1,0 +1,37 @@
+{
+  "tabs": [
+    {
+      "id": "web-01",
+      "name": "web-01",
+      "host": "192.168.1.20",
+      "port": 22,
+      "user": "deploy",
+      "auth": {
+        "type": "password",
+        "password": "change-me"
+      }
+    },
+    {
+      "id": "db-01",
+      "name": "db-01",
+      "host": "192.168.1.30",
+      "port": 22,
+      "user": "root",
+      "auth": {
+        "type": "key",
+        "privateKeyPath": "~/.ssh/id_ed25519",
+        "passphrase": "optional-key-passphrase"
+      }
+    },
+    {
+      "id": "router",
+      "name": "router",
+      "host": "192.168.1.1",
+      "port": 22,
+      "user": "admin",
+      "auth": {
+        "type": "agent"
+      }
+    }
+  ]
+}
